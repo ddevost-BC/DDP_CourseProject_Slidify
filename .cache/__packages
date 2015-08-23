@@ -1,0 +1,10 @@
+base
+devtools
+slidify
+knitr
+shiny
+zoo
+timeDate
+forecast
+DBI
+RMySQL

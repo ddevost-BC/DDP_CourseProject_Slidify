@@ -1,0 +1,47 @@
+---
+title       : Developing Data Products
+subtitle    : Course Project
+author      : Devost Ds
+job         : System Engineering Manager
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- .class #id
+
+## Time Series Forecasts For Australian Gas Production
+
+This presentation was created for the Developing Data Products cousre project. The assignement was to write a simple shiny application demonstrating an understanding of the concepts outlined in class were understood by the student.
+
+--- .class #id 
+
+## Application
+
+To display the understanding of using shiny to build an application, a simple application called Time Series Forecasts For Australian Gas Production has been developed and deployed at: https://devostds.shinyapps.io/Shiny
+
+The application allows the user to:
+
+Input the number of months they which to Forecast Australian Gas Production. The application uses data set 'Australian monthly gas production' found int he Forecast package for R. Actual data set is from 1956 - 1995. After the user selects the 'number of months forward to predict' the application uses Arima modeling to forecast future production within two bands 85% & 90%. 
+
+
+--- .class #id 
+
+## Partial View of the Data set
+
+```{r}
+library('forecast'
+        )
+
+gas
+
+```
+
+--- .class #id
+
+## The Application
+
+This application may not be the most useful off applications as it stands today, but it was assembled as a demonstration and could be very useful if applied to a more relevant data set.
+
+Thank you for your time.

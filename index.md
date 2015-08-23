@@ -1,0 +1,98 @@
+---
+title       : Developing Data Products
+subtitle    : Course Project
+author      : Devost Ds
+job         : System Engineering Manager
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- .class #id
+
+## Time Series Forecasts For Australian Gas Production
+
+This presentation was created for the Developing Data Products cousre project. The assignement was to write a simple shiny application demonstrating an understanding of the concepts outlined in class were understood by the student.
+
+--- .class #id 
+
+## Application
+
+To display the understanding of using shiny to build an application, a simple application called Time Series Forecasts For Australian Gas Production has been developed and deployed at: https://devostds.shinyapps.io/Shiny
+
+The application allows the user to:
+
+Input the number of months they which to Forecast Australian Gas Production. The application uses data set 'Australian monthly gas production' found int he Forecast package for R. Actual data set is from 1956 - 1995. After the user selects the 'number of months forward to predict' the application uses Arima modeling to forecast future production within two bands 85% & 90%. 
+
+
+--- .class #id 
+
+## Partial View of the Data set
+
+
+```r
+library('forecast'
+        )
+
+gas
+```
+
+```
+## Time Series:
+## Start = 1 
+## End = 476 
+## Frequency = 1 
+##   [1]  1709  1646  1794  1878  2173  2321  2468  2416  2184  2121  1962
+##  [12]  1825  1751  1688  1920  1941  2311  2279  2638  2448  2279  2163
+##  [23]  1941  1878  1773  1688  1783  1984  2290  2511  2712  2522  2342
+##  [34]  2195  1931  1910  1730  1688  1899  1994  2342  2553  2712  2627
+##  [45]  2363  2311  2026  1910  1762  1815  2005  2089  2617  2828  2965
+##  [56]  2891  2532  2363  2216  2026  1804  1773  2015  2089  2627  2712
+##  [67]  3007  2880  2490  2237  2205  1984  1868  1815  2047  2142  2743
+##  [78]  2775  3028  2965  2501  2501  2131  2015  1910  1868  2121  2268
+##  [89]  2690  2933  3218  3028  2659  2406  2258  2057  1889  1984  2110
+## [100]  2311  2785  3039  3229  3070  2659  2543  2237  2142  1962  1910
+## [111]  2216  2437  2817  3123  3345  3112  2659  2469  2332  2110  1910
+## [122]  1941  2216  2342  2923  3229  3513  3355  2849  2680  2395  2205
+## [133]  1994  1952  2290  2395  2965  3239  3608  3524  3018  2648  2363
+## [144]  2247  1994  1941  2258  2332  3323  3608  3957  3672  3155  2933
+## [155]  2585  2384  2057  2100  2458  2638  3292  3724  4652  4379  4231
+## [166]  3756  3429  3461  3345  4220  4874  5064  5951  6774  7997  7523
+## [177]  7438  6879  6489  6288  5919  6183  6594  6489  8040  9715  9714
+## [188]  9756  8595  7861  7753  8154  7778  7402  8903  9742 11372 12741
+## [199] 13733 13691 12239 12502 11241 10829 11569 10397 12493 11962 13974
+## [210] 14945 16805 16587 14225 14157 13016 12253 11704 12275 13695 14082
+## [221] 16555 17339 17777 17592 16194 15336 14208 13116 12354 12682 14141
+## [232] 14989 16159 18276 19157 18737 17109 17094 15418 14312 13260 14990
+## [243] 15975 16770 19819 20983 22001 22337 20750 19969 17293 16498 15117
+## [254] 16058 18137 18471 21398 23854 26025 25479 22804 19619 19627 18488
+## [265] 17243 18284 20226 20903 23768 26323 28038 26776 22886 22813 22404
+## [276] 19795 18839 18892 20823 22212 25076 26884 30611 30228 26762 25885
+## [287] 23328 21930 21433 22369 24503 25905 30605 34984 37060 34502 31793
+## [298] 29275 28305 25248 27730 27424 32684 31366 37459 41060 43558 42398
+## [309] 33827 34962 33480 32445 30715 30400 31451 31306 40592 44133 47387
+## [320] 41310 37913 34355 34607 28729 26138 30745 35018 34549 40980 42869
+## [331] 45022 40387 38180 38608 35308 30234 28801 33034 35294 33181 40797
+## [342] 42355 46098 42430 41851 39331 37328 34514 32494 33308 36805 34221
+## [353] 41020 44350 46173 44435 40943 39269 35901 32142 31239 32261 34951
+## [364] 38109 43168 45547 49568 45387 41805 41281 36068 34879 32791 34206
+## [375] 39128 40249 43519 46137 56709 52306 49397 45500 39857 37958 35567
+## [386] 37696 42319 39137 47062 50610 54457 54435 48516 43225 42155 39995
+## [397] 37541 37277 41778 41666 49616 57793 61884 62400 50820 51116 45731
+## [408] 42528 40459 40295 44147 42697 52561 56572 56858 58363 45627 45622
+## [419] 41304 36016 35592 35677 39864 41761 50380 49129 55066 55671 49058
+## [430] 44503 42145 38698 38963 38690 39792 42545 50145 58164 59035 59408
+## [441] 55988 47321 42269 39606 37059 37963 31043 41712 50366 56977 56807
+## [452] 54634 51367 48073 46251 43736 39975 40478 46895 46147 55011 57799
+## [463] 62450 63896 57784 53231 50354 38410 41600 41471 46287 49013 56624
+## [474] 61739 66600 60054
+```
+
+--- .class #id
+
+## The Application
+
+This application may not be the most useful off applications as it stands today, but it was assembled as a demonstration and could be very useful if applied to a more relevant data set.
+
+Thank you for your time.
